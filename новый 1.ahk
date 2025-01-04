@@ -35,6 +35,28 @@ WM_MOUSEWHEEL(hWnd, wp)
       WM_VSCROLL(wp>>16 & 0xFFFF < 0x7FFF ? SB_LINEUP : SB_LINEDOWN, 0, WM_VSCROLL, hWnd)
 }
 
+UpdateScrollBar(hWnd, ScrollHeight, GuiHeight)
+{
+   VarSetCapacity(si, 28, 0)
+   NumPut(28, si) ; cbSize
+   NumPut(SIF_RANGE | SIF_PAGE, si, 4)
+   NumPut(ScrollHeight, si, 12) ; nMax
+   NumPut(GuiHeight, si, 16) ; nPage
+   DllCall("SetScrollInfo", Ptr, hWnd, UInt, SB_VERT, Ptr, &si, UInt, 1)
+   
+   GuiControlGet, Pos, %hWnd%: Pos, Edit1
+   if (PosY = 10)
+      Return
+   
+   top := PosY - 10
+   GuiControlGet, Pos, %hWnd%: Pos, Edit20
+   bottom := PosY + PosH + 10
+   if (top < 0 && bottom < GuiHeight)
+   {
+      y := (a := Abs(top)) > (b := GuiHeight-bottom) ? b : a
+      DllCall("ScrollWindow", Ptr, hWnd, Int, 0, Int, y, Ptr, 0, Ptr, 0)
+   }
+}
 
 WM_VSCROLL(wParam, lParam, msg, hwnd)
 {

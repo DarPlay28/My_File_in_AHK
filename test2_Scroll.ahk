@@ -14,6 +14,8 @@ IniRead ydost, %way%, USER, ydost
 IniRead srok_d, %way%, USER, srok_d
 ;Array[1] := IniRead element, %way%, HOTKEY, element
 
+global WS_VSCROLL := 0x200000, SIZE_MINIMIZED := 1, SIF_RANGE := 0x1, SIF_PAGE := 0x2, SB_VERT := 1, SB_LINEUP := 0, SB_LINEDOWN := 1, WM_VSCROLL := 0x115
+
 {IniRead savea1, %way%, HOTKEY, savea1
 IniRead savea2, %way%, HOTKEY, savea2
 IniRead savea3, %way%, HOTKEY, savea3
@@ -90,10 +92,8 @@ Return
 Info:
 	IfWinNotExist ,Подробнее
 	{
-		Gui 2: +AlwaysOnTop hwndMainWin
-		Gui 2: Color, White
-		Gui 2: font, s10,, Verdanat
-		
+		Gui 2, +%WS_VSCROLL% +Resize +hwndhGui
+		Gui, Margin, 10, 10
 		Gui 2: Add, Hotkey, w100 h20 x7 y7 vChosenHotkey1 vsave1 gSav1, %savea1%
 		Gui 2: Add, Hotkey, w100 h20 x7 y27 vChosenHotkey2 vsave2 gSav2, %savea2%
 		Gui 2: Add, Hotkey, w100 h20 x7 y47 vChosenHotkey3 vsave3 gSav3, %savea3%
@@ -129,12 +129,27 @@ Info:
 		Gui 2: Add, Hotkey, w100 h20 x7 y647 vChosenHotkey33 vsave33 gSav33, %savea33%
 		Gui 2: Add, Hotkey, w100 h20 x7 y667 vChosenHotkey34 vsave34 gSav34, %savea34%
 		Gui 2: Add, Hotkey, w100 h20 x7 y687 vChosenHotkey35 vsave35 gSav35, %savea35%
-
+		ScrollSize := 80*20 + 10*19 + 20
+		Gui, Show, h400
+		Gui 2: +AlwaysOnTop hwndMainWin
+		Gui 2: Color, White
+		Gui 2: font, s10,, Verdanat
+		
+		
+		save1 := savea1
+		save2 := savea2
+		save3 := savea3
+		save4 := savea4
+		save5 := savea5
 		Loop 35
 		{
 			save%A_Index% := savea%A_Index%
 		}
-
+		Actio1 := savea1
+		Actio2 := savea2
+		Actio3 := savea3
+		Actio4 := savea4
+		Actio5 := savea5
 		Loop 35
 		{
 			Actio%A_Index% := savea%A_Index%
@@ -179,7 +194,8 @@ Info:
 		Gui 2: Add, Text, x110 y667, – Поставить капельницу
 		Gui 2: Add, Text, x110 y687, – Проверить давление
 		
-		Gui 2: Show,  x870 yCenter h755, Подробнее
+		Gui 2: Show, x870 yCenter h755, Подробнее
+		drf := 1
 	}
 	else
 	{
@@ -189,218 +205,220 @@ Return
 
 ;########################################################################################################################;
 ;########################################################################################################################;
-
+Savn()
+{
+	WinSetTitle, Подробнее, , *Подробнее
+	drf := 0
+}
 Sav1:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio1, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav2:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio2, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav3:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio3, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav4:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio4, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav5:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio5, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav6:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio6, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav7:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio7, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
-Actio7 := %save7%
-GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 Sav8:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio8, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav9:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio9, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav10:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio10, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav11:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio11, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav12:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio12, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav13:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio13, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav14:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio14, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav15:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio15, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav16:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio16, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav17:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio17, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav18:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio18, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav19:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio19, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav20:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio20, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav21:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio21, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav22:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio22, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav23:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio23, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav24:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio24, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav25:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio25, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav26:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio26, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav27:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio27, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav28:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio28, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav29:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio29, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav30:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio30, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav31:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio31, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav32:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio32, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav33:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio33, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav34:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio34, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 Sav35:
 	Hotkey, % PrKey%A_Gui%%A_GuiControl%, Off, UseErrorLevel
 	GuiControlGet, Key, %A_Gui%:, %A_GuiControl%
 	Hotkey, % PrKey%A_Gui%%A_GuiControl% := Key, Actio35, On, UseErrorLevel
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn()
 Return
 
 ;########################################################################################################################;
@@ -461,7 +479,9 @@ SaveBind:
 	IniWrite %save35%, %way%, HOTKEY, savea35
 	
 	WinSetTitle, *Подробнее, , Подробнее
+	drf = 1
 return
+
 Default:
 	save1 =!t
 	save2 =!y
@@ -499,8 +519,9 @@ Default:
 	save34 =!Numpad3
 	save35 =!Numpad2
 	
-	WinSetTitle, Подробнее, , *Подробнее
+	Savn() ; pensil
 return
+
 SaveInfo:
 	GuiControlGet, name1
 	IniWrite %name1%, %way%, USER, name1
@@ -514,6 +535,7 @@ SaveInfo:
 	IniWrite %ydost1%, %way%, USER, ydost
 	GuiControlGet, srok_d1
 	IniWrite %srok_d1%, %way%, USER, srok_d
+	
 return
 
 ;########################################################################################################################;
@@ -525,6 +547,78 @@ pbind() ; Для уменьшения строк в скрипте в некот
 	bind("/me Правой рукой обхватил рацию", 5, 150)
 	bind("/do Рация обхвачена рукой.", 5, 150)
 	bind("/me Нажал кнопку РТТ", 5, 150)
+}
+
+binds1(s1, s2, s3, b, d)
+{
+	SendMessage, 0x50,, 0x4190419,, A ; Русская раскладка, есть английская: SendMessage, 0x50,, 0x4090409,, A
+	SendInput, {t}
+	Sleep %d%
+	if (b > 0)
+	{
+		Send ^%b%
+		Sleep %d%
+	}
+	SendInput, %s1%
+	Sleep 10
+	SendInput, %s2%
+	Sleep 10
+	SendInput, %s3%
+	Sleep 100
+	SendInput,{enter}
+	Sleep %d%
+}
+
+binds2(s1, s2, s3, s4, s5, b, d)
+{
+	SendMessage, 0x50,, 0x4190419,, A
+	SendInput, {t}
+	Sleep %d%
+	if (b > 0)
+	{
+		Send ^%b%
+		Sleep %d%
+	}
+	SendInput, %s1%
+	Sleep 10
+	SendInput, %s2%
+	Sleep 10
+	SendInput, %s3%
+	Sleep 10
+	SendInput, %s4%
+	Sleep 10
+	SendInput, %s5%
+	Sleep 100
+	SendInput,{enter}
+	Sleep %d%
+}
+
+binds3(s1, s2, s3, s4, s5, s6, s7, b, d)
+{
+	SendMessage, 0x50,, 0x4190419,, A
+	SendInput, {t}
+	Sleep %d%
+	if (b > 0)
+	{
+		Send ^%b%
+		Sleep %d%
+	}
+	SendInput, %s1%
+	Sleep 10
+	SendInput, %s2%
+	Sleep 10
+	SendInput, %s3%
+	Sleep 10
+	SendInput, %s4%
+	Sleep 10
+	SendInput, %s5%
+	Sleep 10
+	SendInput, %s6%
+	Sleep 10
+	SendInput, %s7%
+	Sleep 100
+	SendInput,{enter}
+	Sleep %d%
 }
 
 bind(s, b, d)
@@ -560,7 +654,7 @@ bindt(s, b, d)
 	Sleep %d%
 }
 
-################################:: Дальше идёт текст самого бинда ::##########################################;
+;##########################################:: Дальше идёт текст самого бинда ::##########################################;
 ;#########################################:: Текст по желанию меняйте на свой ::#########################################;
 
 Actio1: ; BindNumber: 1
@@ -570,19 +664,19 @@ Actio1: ; BindNumber: 1
 Return
 Actio2: ; BindNumber: 2
 	bind("Здравия желаю!", 5, 150)
-	bind("Я " zvanie " городской больницы " sity " " %name% ".", 5, 150)
+	binds3("Здравствуйте. Я ", %rank%, " городской больницы ", Format( "{1:s}" , %sity%), " ", %name%, " ", 5, 300)
 	bind("/me Достал с кармана красное удостоверение сотрудника Министерства Здравоохранения", 5, 150)
 	bind("/do Удостоверение в руке.", 5, 150)
 	bind("/me В раскрытом виде показала удостоверение человеку напротив", 5, 150)
 	bind("/me Убрал свое удостоверение обратно в карман.", 5, 150)
 	bind("/do Удостоверение в кармане.", 5, 150)
-	bind("/do Удостоверение №"  ".", 5, 150)
-	bind("/do Удостоверение действительно до Дата принятие.03.24г.", 5, 150)
+	binds1("/do Удостоверение №", %ydost%, ".", 5, 150)
+	binds1("/do Удостоверение действительно до ", %srok_d%, ".", 5, 150)
 Return
 Actio3: ; BindNumber: 3
-	smbind(sdfsdf, sdfsdf, 5, 200)
+	binds3("Здравствуйте. Я ", %rank%, " городской больницы ", %sity%, " ", %name%, "", 5, 300)
 	bind("Чем могу быть полезен?", 5, 300)
-	bind("/do Бейджик " %rank% " " %name% " на груди.", 5, 300)
+	binds2("/do Бейджик ", %rank%, " ", %name%, " на груди.", 5, 300)
 Return
 Actio4: ; BindNumber: 4
 	bind("/me Внимательно осмотрел пациента", 5, 300)
@@ -977,8 +1071,8 @@ GuiClose:
 	IfMsgBox Yes
 	{
 		Gui, 1:Destroy
-		drf := true
 		Gui, 2:Destroy
+		drf := 1
 	}
 	IfMsgBox No
 	{
@@ -991,12 +1085,13 @@ GuiClose:
 return
 
 2GuiClose:
-	if (drf = false)
+	if drf = 0
 	{
 		MsgBox, 3, ВНИМАНИЕ, Вы уверены?`nНесохранённые данные будут удалены
 		IfMsgBox Yes
 		{
 			Gui, 2:Destroy
+			drf = 1
 		}
 		IfMsgBox No
 		{
@@ -1009,23 +1104,16 @@ return
 	}
 	else
 	{
-		drf := false
+		Gui, 2:Destroy
 	}
 return
 
 ^+1::
 	WinHide Подробнее
 	WinHide *Подробнее
-	bind("Здравствуйте. Я " %zvanie1% " городской больницы " %sity1% " " %name1% ".", 5, 300)
 return
 
 ^+2::
 	WinShow Подробнее
 	WinShow *Подробнее
 return
-еЗдравия желаюеЯ  городской больницы Москва (МСК) .
-е/me Достал с кармана красное удостоверение сотрудника Министерства Здравоохраненияе/do Удостоверение в руке.
-е/me В раскрытом виде показала удостоверение человеку напротиве/me Убрал свое удостоверение обратно в карман.
-е/do Удостоверение в кармане.
-е/do Удостоверение №.
-е/do Удостоверение действительно до Дата принятие.03.24г.

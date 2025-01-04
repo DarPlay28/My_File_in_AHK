@@ -19,56 +19,23 @@ Two(c, c2, s, txt, en) ; всё тоже самое, только r2 - втор�
 	Sleep %s%
 	Send, %en%
 }
-
-::ботинкиб::$600
-::поножиб::$1050
-::нагрудникб::$1200
-::Шлемб::$750
-::киркаб::$500
-::лопатаб::$500
-::топорб::$500
-::мотыгаб::$500
-::р1::&lНе работает
-::р2::Подойдите к кассе&l №1
-::р3::Закуп: 10.000
-;Шлем - 750, Нагрудник - 1200, Поножи - 1050, Ботинки - 600. /warp shopmining
 ;ответы в Answ
-::ВкгвбвM?::/Answ 2009
+::ВкгвбвM?::/Answ 200
 ::Чзтнго?::/Answ Мицелий
 ::Кбидз?::/Answ Зельеварка
-
-{!O::
-	SendMessage, 0x50,, 0x4090409,, A
-	Two("{Home}", "{Delete 2}", 20, "/rg removemember dar_play", "{End}")
-Return
-}
-::rgadm::/rg addmember dar_play
-::rgadm2::/rg addmember dar_play2
-::rgadm3::/rg addmember Dar_play
-::rgadw::/rg addowner dar_play
-::rgadw2::/rg addowner dar_play2
-::rgadw3::/rg addowner Dar_play
-{!I::
-	SendMessage, 0x50,, 0x4090409,, A
-	Two("{Home}", "{Delete 2}", 20, "/rg addmember dar_play", "{End}")
-Return
-}
+;Шлем - 750, Нагрудник - 1200, Поножи - 1050, Ботинки - 600.
+&lАбривиатуры:
 Numpad1::
-	Sleep 500
-	If (A_PriorHotKey = A_ThisHotKey and A_TimeSincePriorHotkey < 500)
-	{
-		SendMessage, 0x50,, 0x4090409,, A
-		One("t", 30, "/Fr List", "{Enter}")
-		Sleep 50
-		One("t", 30, "/Region list", "{Enter}")
-		Sleep 50
-		One("t", 30, "/Home list", "{Enter}")
-	}else{
-		SendMessage, 0x50,, 0x4090409,, A
-		One("t", 30, "/TCA Check", "{Enter}")
-		Sleep 50
-		One("t", 30, "/money", "{Enter}")
-	}
+	SendMessage, 0x50,, 0x4090409,, A
+	One("t", 30, "/Fr List", "{Enter}")
+	Sleep 50
+	One("t", 30, "/Region list", "{Enter}")
+	Sleep 50
+	One("t", 30, "/Home list", "{Enter}")
+	Sleep 50
+	One("t", 30, "/TCA Check", "{Enter}")
+	Sleep 50
+	One("t", 30, "/money", "{Enter}")
 Return
 {Numpad2::
 	SendMessage, 0x50,, 0x4090409,, A
@@ -85,11 +52,6 @@ Return
 	One("{Home}", 20, "{!}", "{Enter}")
 Return
 }
-;{Numpad5::
-;	SendMessage, 0x50,, 0x4090409,, A
-;	One("{Home}", 20, "/Clan Chat ", "{Enter}")
-;Return
-;}
 {Numpad5::
 	SendMessage, 0x50,, 0x4090409,, A
 	One("{Home}", 20, "/Clan Chat ", "{Enter}")
@@ -118,12 +80,7 @@ Return
 {!Numpad1::
 	SendMessage, 0x50,, 0x4090409,, A
 	;One("t", 20, "/warp doma build", "{Enter}")
-	One("t", 20, "/home my_shop", "{Enter}")
-Return
-}
-{!Numpad2::
-	SendMessage, 0x50,, 0x4090409,, A
-	One("t", 20, "/home set", "{Enter}")
+	One("t", 20, "/tpa Dar_Play28", "{Enter}")
 Return
 }
 {!Numpad3::
@@ -131,17 +88,9 @@ Return
 	One("t", 20, "/home", "{Enter}")
 Return
 }
-{!Numpad4::
-	SendMessage, 0x50,, 0x4090409,, A
-	One("t", 20, "/Swarp Les", "{Enter}")
-Return
-}
-::wrps::/warp shopmining
-::wrpm::/warp shopmining
 ::wrpg::/warp gold
 ::wrp1::/warp 1/7
 ::wrp2::/warp japanshop
-::wrp3::/warp denw
 {!Numpad7::
 	SendMessage, 0x50,, 0x4090409,, A
 	Two("{Home}", "{Delete 2}", 20, "/tpa", "{Enter}")
@@ -180,12 +129,3 @@ Return
 	One("{Home}", 20, "/Answ ", "{Enter}")
 Return
 }
-!1::
-	SetTitleMatchMode, 2
-	DetectHiddenWindows, On
-	IniWrite gey, %A_WorkingDir%\1.txt, A, 
-	Run, %A_WorkingDir%\Script1.ahk
-
-!R::
-	Reload
-Return
