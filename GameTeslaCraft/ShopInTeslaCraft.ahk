@@ -9,7 +9,7 @@ One(c, s, txt, en) ; c - чат, s - Sleep (задержка), txt - текст 
 	Send, %en%
 }
 
-Two(c, c2, s, txt, en) ; всё тоже самое, только r2 - второе действие вначале 
+Two(c, c2, s, txt, en) ; всё тоже самое, только r2 - второе действие вначале
 {
 	Send, %c%
 	Sleep %s%
@@ -19,18 +19,6 @@ Two(c, c2, s, txt, en) ; всё тоже самое, только r2 - втор�
 	Sleep %s%
 	Send, %en%
 }
-
-::ботинкиб::$600
-::поножиб::$1050
-::нагрудникб::$1200
-::Шлемб::$750
-::киркаб::$500
-::лопатаб::$500
-::топорб::$500
-::мотыгаб::$500
-::р1::&lНе работает
-::р2::Подойдите к кассе&l №1
-::р3::Закуп: 10.000
 ;Шлем - 750, Нагрудник - 1200, Поножи - 1050, Ботинки - 600. /warp shopmining
 ;ответы в Answ
 ::ВкгвбвM?::/Answ 2009
@@ -53,6 +41,7 @@ Return
 	Two("{Home}", "{Delete 2}", 20, "/rg addmember dar_play", "{End}")
 Return
 }
+
 Numpad1::
 	Sleep 500
 	If (A_PriorHotKey = A_ThisHotKey and A_TimeSincePriorHotkey < 500)
@@ -72,12 +61,12 @@ Numpad1::
 Return
 {Numpad2::
 	SendMessage, 0x50,, 0x4090409,, A
-	Two("{Home}", "{Delete 2}", 20, "/TCA Transfer", "{End}")
+	Two("{Home}", "{Delete 2}", 20, "/TCA Transfer", "{Enter}")
 Return
 }
 {Numpad3::
 	SendMessage, 0x50,, 0x4090409,, A
-	Two("{Home}", "{Delete 2}", 20, "/pay", "{End}")
+	Two("{Home}", "{Delete 2}", 20, "/pay", "{Enter}")
 Return
 }
 {Numpad4::
@@ -85,11 +74,6 @@ Return
 	One("{Home}", 20, "{!}", "{Enter}")
 Return
 }
-;{Numpad5::
-;	SendMessage, 0x50,, 0x4090409,, A
-;	One("{Home}", 20, "/Clan Chat ", "{Enter}")
-;Return
-;}
 {Numpad5::
 	SendMessage, 0x50,, 0x4090409,, A
 	One("{Home}", 20, "/Clan Chat ", "{Enter}")
@@ -142,6 +126,7 @@ Return
 ::wrp1::/warp 1/7
 ::wrp2::/warp japanshop
 ::wrp3::/warp denw
+::swTCA::/swarp TCA
 {!Numpad7::
 	SendMessage, 0x50,, 0x4090409,, A
 	Two("{Home}", "{Delete 2}", 20, "/tpa", "{Enter}")
@@ -183,9 +168,17 @@ Return
 !1::
 	SetTitleMatchMode, 2
 	DetectHiddenWindows, On
-	IniWrite gey, %A_WorkingDir%\1.txt, A, 
+	IniWrite gey, %A_WorkingDir%\1.txt, A,
 	Run, %A_WorkingDir%\Script1.ahk
 
 !R::
 	Reload
+Return
+
+>!P::
+	Pause, Off
+Return
+
+<!P::
+	Pause, On
 Return

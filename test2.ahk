@@ -93,7 +93,7 @@ Info:
 		Gui 2: +AlwaysOnTop hwndMainWin
 		Gui 2: Color, White
 		Gui 2: font, s10,, Verdanat
-		
+
 		Gui 2: Add, Hotkey, w100 h20 x7 y7 vChosenHotkey1 vsave1 gSav1, %savea1%
 		Gui 2: Add, Hotkey, w100 h20 x7 y27 vChosenHotkey2 vsave2 gSav2, %savea2%
 		Gui 2: Add, Hotkey, w100 h20 x7 y47 vChosenHotkey3 vsave3 gSav3, %savea3%
@@ -129,7 +129,7 @@ Info:
 		Gui 2: Add, Hotkey, w100 h20 x7 y647 vChosenHotkey33 vsave33 gSav33, %savea33%
 		Gui 2: Add, Hotkey, w100 h20 x7 y667 vChosenHotkey34 vsave34 gSav34, %savea34%
 		Gui 2: Add, Hotkey, w100 h20 x7 y687 vChosenHotkey35 vsave35 gSav35, %savea35%
-		
+
 		save1 := savea1
 		save2 := savea2
 		save3 := savea3
@@ -144,14 +144,10 @@ Info:
 		Actio3 := savea3
 		Actio4 := savea4
 		Actio5 := savea5
-		Loop 35
-		{
-			Actio%A_Index% := savea%A_Index%
-		}
 
 		Gui 2: Add, Button, w100 h23 x7 y707 gSaveBind, Сохранить
 		Gui 2: Add, Button, w180 h23 x107 y707 gDefault, По умолчанию
-		
+
 		Gui 2: Add, Text, x110 y7, – Часы
 		Gui 2: Add, Text, x110 y27, – Удостоверение
 		Gui 2: Add, Text, x110 y47, – Приветствие
@@ -187,7 +183,7 @@ Info:
 		Gui 2: Add, Text, x110 y647, – Сеанс для наркозависимых
 		Gui 2: Add, Text, x110 y667, – Поставить капельницу
 		Gui 2: Add, Text, x110 y687, – Проверить давление
-		
+
 		Gui 2: Show, x870 yCenter h755, Подробнее
 		drf := 1
 	}
@@ -419,14 +415,9 @@ Return
 ;########################################################################################################################;
 
 Run:
-	GuiControlGet, name1
-	GuiControlGet, rank1
-	GuiControlGet, sity1
-	GuiControlGet, structure1
-	GuiControlGet, ydost1
-	GuiControlGet, srok_d1
+	Gui, Submit, NoHide
 	WinHide Подробнее
-	WinHide *Подробнее 
+	WinHide *Подробнее
 	WinHide Бинд на медики
 	WinHide *Бинд на медики
 return
@@ -471,7 +462,7 @@ SaveBind:
 	IniWrite %save33%, %way%, HOTKEY, savea33
 	IniWrite %save34%, %way%, HOTKEY, savea34
 	IniWrite %save35%, %way%, HOTKEY, savea35
-	
+
 	WinSetTitle, *Подробнее, , Подробнее
 	drf = 1
 return
@@ -512,24 +503,19 @@ Default:
 	save33 =!Numpad7
 	save34 =!Numpad3
 	save35 =!Numpad2
-	
+
 	Savn() ; pensil
 return
 
 SaveInfo:
-	GuiControlGet, name1
+	Gui, Submit
 	IniWrite %name1%, %way%, USER, name1
-	GuiControlGet, rank1
 	IniWrite %rank1%, %way%, USER, rank
-	GuiControlGet, sity1
 	IniWrite %sity1%, %way%, USER, sity
-	GuiControlGet, structure1
 	IniWrite %structure1%, %way%, USER, structure
-	GuiControlGet, ydost1
 	IniWrite %ydost1%, %way%, USER, ydost
-	GuiControlGet, srok_d1
 	IniWrite %srok_d1%, %way%, USER, srok_d
-	
+
 return
 
 ;########################################################################################################################;
@@ -657,6 +643,7 @@ Actio1: ; BindNumber: 1
 	bindt("/do Часы на руке показывают ", 5, 250)
 Return
 Actio2: ; BindNumber: 2
+	Gui, Submit ; Получаем значения из полей ввода
 	bind("Здравия желаю!", 5, 150)
 	binds3("Здравствуйте. Я ", %rank%, " городской больницы ", %sity%, " ", %name%, " ", 5, 300)
 	bind("/me Достал с кармана красное удостоверение сотрудника Министерства Здравоохранения", 5, 150)
@@ -1094,7 +1081,7 @@ return
 		IfMsgBox Cancel
 		{
 			return
-		} 
+		}
 	}
 	else
 	{
